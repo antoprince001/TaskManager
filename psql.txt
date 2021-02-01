@@ -1,0 +1,13 @@
+Commands for PSQL:
+
+CREATE DATABASE demo;
+
+CREATE TABLE list(
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    completed BOOLEAN NOT NULL
+);
+
+INSERT INTO list (name,completed) values('Task1',false);
+INSERT INTO list (name,completed) values('Task2',true);
+
