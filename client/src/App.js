@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 const api = axios.create({
   baseURL : "http://localhost:5000/"
 });
+
+
 
 function App() {
 
@@ -32,6 +34,33 @@ function App() {
       fetchData();
     }catch(err){}
   };
+
+  const handleDelete = async (e,name)=>{
+    e.stopPropagation();
+    try {
+      const response = await api.post('/delete',{
+        name
+      });
+      console.log(response);
+      fetchData();
+      }catch(err){
+        console.log(err);
+      }
+    }
+
+  const handleUpdate = async (e,name,completed)=>{
+    e.stopPropagation();
+    try {
+      const response = await api.put('/update',{
+        name,
+        completed
+      });
+      console.log(response);
+      fetchData();
+      }catch(err){
+        console.log(err);
+      }
+}
 
   useEffect(() => {
     fetchData();
@@ -70,8 +99,10 @@ function App() {
               return(
               <div key={ list.id }>
 
-                   <h3>{ l.name }&nbsp;{ l.completed == true ? 'Done' : 'Not Done' }</h3>
-                   
+                   <h3>{ l.name }&nbsp;{ l.completed === true ? 'Done' : 'Not Done' }</h3>
+                   <button  onClick ={ (e) => handleUpdate(e,l.name,l.completed)}>Update</button>
+              
+                   <button  onClick = { (e) =>  handleDelete(e,l.name)}>Delete</button>
               </div>
               )
             })
