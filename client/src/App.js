@@ -2,14 +2,15 @@
 import './App.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
+import  { useHistory } from 'react-router-dom';
 const api = axios.create({
   baseURL : "http://localhost:5000/"
 });
 
 
-
 function App() {
+
+  let history = useHistory();
 
   const [name,setName] = useState('');
   const [list,setList] = useState([]);
@@ -50,16 +51,17 @@ function App() {
 
   const handleUpdate = async (e,name,completed)=>{
     e.stopPropagation();
-    try {
-      const response = await api.put('/update',{
-        name,
-        completed
-      });
-      console.log(response);
-      fetchData();
-      }catch(err){
-        console.log(err);
-      }
+    history.push("/update");
+    // try {
+    //   const response = await api.put('/update',{
+    //     name,
+    //     completed
+    //   });
+    //   console.log(response);
+    //   fetchData();
+    //   }catch(err){
+    //     console.log(err);
+    //   }
 }
 
   useEffect(() => {
